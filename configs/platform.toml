@@ -1,0 +1,57 @@
+[project]
+status = "scaffold"
+primary_workload = "UNSET"
+second_workload = "UNSET"
+
+[identity]
+data_fingerprint_required = true
+mlflow_run_required = true
+registered_model_version_required = true
+image_digest_required = true
+deployment_reference = "immutable_model_version_and_image_digest"
+
+[environments.local]
+provider = "kind"
+enabled = false
+
+[environments.cloud]
+provider = "aws_eks"
+enabled = false
+apply_enabled = false
+
+[release_gates]
+required = [
+    "tests",
+    "model_quality",
+    "schema_compatibility",
+    "image_scan",
+    "smoke_test",
+    "bounded_slo",
+]
+quality_threshold = "UNSET"
+schema_version = "UNSET"
+canary_window = "UNSET"
+
+[slo]
+availability_target = "UNSET"
+p95_latency_ms = "UNSET"
+p99_latency_ms = "UNSET"
+observation_window = "UNSET"
+load_profile = "UNSET"
+
+[recovery]
+automatic_rollback_required = true
+drill_repetitions = "UNSET"
+detection_target_s = "UNSET"
+recovery_target_s = "UNSET"
+
+[cost]
+owner_tag = "UNSET"
+budget_limit = "UNSET"
+ttl_tag_required = true
+destroy_path_required = true
+
+[kafka_extension]
+enabled = false
+requires_idempotency_contract = true
+requires_consumer_lag_drill = true

@@ -1,0 +1,38 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.DS_Store
+
+# Credentials and local environment configuration.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+kubeconfig*
+
+# Terraform runtime state and plans.
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Models, datasets and generated run evidence.
+data/raw/
+data/processed/
+models/
+artifacts/
+reports/*/runs/
+
+# Local platform volumes and rendered secrets.
+.local/
+infra/**/secrets*.yaml
+infra/**/rendered/
