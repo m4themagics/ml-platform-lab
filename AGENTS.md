@@ -1,7 +1,8 @@
 # Working context for agents
 
-Read this before touching anything. This repository builds a Data / ML Platform Engineer
-portfolio project. Read [README.md](README.md), then
+Read this before touching anything. This repository is paused. Do not advance a phase unless the author explicitly
+reopens it. For preserved context, read
+[README.md](README.md), then
 [docs/development-plan.md](docs/development-plan.md) and [LEARNING.md](LEARNING.md).
 
 ## The rule that overrides default implementation behaviour
@@ -52,6 +53,6 @@ If unsure whether something is central, treat it as central and ask before imple
 
 ## Current state
 
-Phase 0 only. Documentation, a decision config and scaffold tests exist. There is no deployed
+Paused at phase 0. Documentation, a decision config and scaffold tests exist. There is no deployed
 service, local cluster, cloud resource, MLflow run or benchmark result yet. Unset thresholds in
 `configs/platform.toml` are intentional and must be decided before the first measured run.

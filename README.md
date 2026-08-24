@@ -1,5 +1,7 @@
 # ML Platform Lab
 
+> **Portfolio status: paused as of 2026-08-24.** Phase 0 is preserved as a scoped design.
+
 [![python](https://img.shields.io/badge/python-3.12-blue)](pyproject.toml)
 [![kubernetes](https://img.shields.io/badge/Kubernetes-planned-326CE5?logo=kubernetes&logoColor=white)](docs/development-plan.md)
 [![terraform](https://img.shields.io/badge/Terraform-planned-844FBA?logo=terraform&logoColor=white)](docs/development-plan.md)
@@ -49,7 +51,7 @@ bounded load-test objective and exactly how long that observation lasted.
 
 ## Status
 
-**Phase 0 — scaffold and preregistration. No platform workload is deployed yet.** There is no
+**Paused at Phase 0 — scaffold and preregistration. No platform workload is deployed.** There is no
 Kubernetes cluster, cloud infrastructure, MLflow result, latency number or reliability result
 in this repository today. The current files define scope, evidence and the order of work;
 scaffold tests make unset decisions visible.
