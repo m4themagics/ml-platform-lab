@@ -1,9 +1,10 @@
 # ML Platform Lab
 
-> **Portfolio status: paused as of 2026-08-24.** Phase 0 is
-> preserved as a scoped design. On revival the first
-> deliverable is a minimum operational surface — probes, rollout, resource sizing and p95/p99
-> evidence by the shortest path through the phases below — not the full twelve-week Must.
+> **Portfolio status: active as of 2026-08-24.** The current deliverable is a
+> **minimum operational surface** — probes, rollout, resource sizing and p95/p99 evidence by the
+> shortest path through the phases below — not the full twelve-week Must. Nothing is deployed
+> yet; the table under [Status](#status) is the executable state, and it changes only when a
+> command works from a clean checkout.
 
 [![python](https://img.shields.io/badge/python-3.12-blue)](pyproject.toml)
 [![kubernetes](https://img.shields.io/badge/Kubernetes-planned-326CE5?logo=kubernetes&logoColor=white)](docs/development-plan.md)
@@ -54,23 +55,28 @@ bounded load-test objective and exactly how long that observation lasted.
 
 ## Status
 
-**Paused at Phase 0 — scaffold and preregistration. No platform workload is deployed.** There is no
-Kubernetes cluster, cloud infrastructure, MLflow result, latency number or reliability result
-in this repository today. The current files define scope, evidence and the order of work;
-scaffold tests make unset decisions visible.
+**Active. Phase 0 is closed as scaffold and preregistration; no platform workload is deployed
+yet.** There is no Kubernetes cluster, cloud infrastructure, MLflow result, latency number or
+reliability result in this repository today. The current files define scope, evidence and the
+order of work; scaffold tests make unset decisions visible. `configs/platform.toml` still reads
+`status = "scaffold"` on purpose — reviving the plan does not change executable state.
+
+Work now runs on the shortest path to a minimum operational surface (M1–M4 in the
+[development plan](docs/development-plan.md#возврат-minimum-operational-surface)); phases 2 and
+6–9 are deferred until that surface holds.
 
 | Phase | Deliverable | State |
 |---:|---|---|
 | 0 | Architecture, learning contract, cost and reliability gates | scaffolded |
-| 1 | Small workload, data/model contract, deterministic evaluation | not started |
-| 2 | MLflow tracking, registry and lineage | not started |
-| 3 | Immutable inference image and local service benchmark | not started |
-| 4 | Local Kubernetes deployment: probes, resources, HPA | not started |
-| 5 | OpenTelemetry + Prometheus/Grafana and declared SLO | not started |
-| 6 | Candidate rollout, automated analysis and rollback | not started |
-| 7 | AWS infrastructure through Terraform and GitHub OIDC | not started |
-| 8 | Second workload through the same golden path | not started |
-| 9 | Clean-checkout reproduction and failure report | not started |
+| 1 | Small workload, data/model contract, deterministic evaluation | not started — trimmed into M1 |
+| 2 | MLflow tracking, registry and lineage | not started — deferred past the surface |
+| 3 | Immutable inference image and local service benchmark | not started — trimmed into M2 |
+| 4 | Local Kubernetes deployment: probes, resources, HPA | not started — **M3, the core of the surface** |
+| 5 | OpenTelemetry + Prometheus/Grafana and declared SLO | not started — RED slice is M4, rest deferred |
+| 6 | Candidate rollout, automated analysis and rollback | not started — deferred past the surface |
+| 7 | AWS infrastructure through Terraform and GitHub OIDC | not started — deferred past the surface |
+| 8 | Second workload through the same golden path | not started — deferred past the surface |
+| 9 | Clean-checkout reproduction and failure report | not started — deferred past the surface |
 
 The twelve-week Must scope ends at phase 9. Kafka is a post-Must extension and opens only
 with an actual asynchronous audit path, idempotent consumption, retries and a consumer-lag

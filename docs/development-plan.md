@@ -1,6 +1,8 @@
 # План разработки
 
-Редакция 2026-08-21. Горизонт Must — двенадцать недель.
+Редакция 2026-08-21, ревизия 24.08.2026. Пауза снята. Двенадцатинедельный календарь Must ниже читается как порядок работ, а не
+как расписание. Активный объём — раздел «Возврат: minimum operational surface»; всё остальное
+ниже сохраняется как справочный полный путь.
 
 ## Зачем этот репозиторий
 
@@ -57,6 +59,63 @@ Must занимает 116 часов; четыре часа — резерв. Д
 Первый внешний результат должен появиться к концу четвёртой недели: один model version,
 immutable image и честный локальный latency baseline. Он ещё не доказывает платформу, но уже
 даёт проверяемый end-to-end slice.
+
+---
+
+## Возврат: minimum operational surface
+
+Активный объём с 24.08.2026. Не весь Must ниже, а минимальная эксплуатационная поверхность:
+сервис в `kind`, у которого probes действительно что-то различают, rollout не роняет ready
+capacity, requests и limits выведены из измерений, а p95/p99 назван вместе с нагрузкой и окном
+наблюдения.
+
+Почему режется именно так. Центральный вопрос репозитория — управляемый релиз и восстановление.
+Ни registry, ни cloud не приближают к нему, пока нет работающего сервиса, на котором измерена
+деградация. Поверхность — кратчайший путь до первого проверяемого эксплуатационного результата;
+после него становится осмысленным эксперимент 00.
+
+| # | Шаг | Источник | Часы | Что урезано относительно фазы |
+|---:|---|---|---:|---|
+| M1 | workload и минимальная идентичность релиза | фаза 1 | 6 | остаются data contract, детерминированное обучение, fingerprint и input/output signature; полная release state machine откладывается вместе с фазой 2 — идентичность на этом шаге это commit + fingerprint + image digest |
+| M2 | immutable image и локальный baseline | фаза 3 | 8 | остаются golden request/response, malformed request, graceful shutdown и локальный load test; служебный endpoint отдаёт release metadata без registry |
+| M3 | `kind`: probes, resources, rollout, HPA | фаза 4 | 14 | ничего; это ядро поверхности |
+| M4 | RED-метрики и p95/p99 со стороны сервиса | срез фазы 5 | 6 | остаются request rate, error rate, duration, in-flight и saturation с проверенным вручную PromQL; OTel traces, Grafana и error budget откладываются |
+
+Итого 34 часа. Календарные
+гейты Must пересчитываются только после того, как поверхность закрыта, — не заранее.
+
+### Отложено до закрытия поверхности
+
+- фаза 2 — MLflow tracking, registry и lineage;
+- фаза 6 — canary analysis, автоматический rollback и drills;
+- фаза 7 — Terraform, AWS/EKS и GitHub OIDC;
+- фаза 8 — второй workload;
+- фаза 9 — clean-checkout reproduction и итоговый failure report;
+- Should — Kafka audit path.
+
+Отложенное не удаляется и не переписывается: пока поверхность не закрыта, оно просто ждёт.
+
+### Решения до первого измеренного прогона
+
+Из `configs/platform.toml` к поверхности относятся `project.primary_workload`,
+`release_gates.quality_threshold`, `slo.p95_latency_ms`, `slo.p99_latency_ms`,
+`slo.observation_window` и `slo.load_profile`. Они меняются до прогона, не после. Остальные
+`UNSET` принадлежат отложенным фазам и остаются нетронутыми — их видимая незаполненность и есть
+честный статус.
+
+### Готово, когда
+
+- каждый probe хотя бы раз намеренно красный, и различие startup/readiness/liveness объяснено на
+  событии, а не на YAML;
+- rollout разобран по events: ready capacity не опускалась ниже объявленного минимума;
+- requests выведены из измерения, limits проверены отдельным stress case;
+- p95/p99 и error rate считаются запросом к метрикам сервиса и сходятся с клиентским
+  результатом в объяснённом допуске;
+- цифры названы bounded benchmark objective с hardware, concurrency, payload и длительностью —
+  не SLA и не availability за месяц;
+- всё воспроизводится из clean checkout записанной командой.
+
+Поверхность не закрывается зелёным подом. Она закрывается разобранным таймлайном.
 
 ---
 
@@ -245,7 +304,11 @@ under load, recovery without double-counting и alert/runbook. В AWS реали
 - security theatre из списка сканеров без threat model и blocking gate;
 - второй dashboard, пока первый PromQL не проверен руками.
 
-## При возврате
+## Активный объём
 
-При возврате первым закрывается minimum operational surface — probes, rollout, resource sizing
-и p95/p99, — а не весь двенадцатинедельный Must ниже.
+Активный объём — minimum operational surface (probes, rollout, resource sizing, p95/p99), а не
+весь двенадцатинедельный Must ниже.
+
+Если объём приходится резать, M1–M4
+не разбиваются на «почти сделанные» куски. Незакрытый шаг откатывается к предыдущему честному
+статусу.

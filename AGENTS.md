@@ -1,9 +1,14 @@
 # Working context for agents
 
-Read this before touching anything. This repository is paused. Until the author resumes it, do not advance a phase. For preserved
-context, read
+Read this before touching anything. This repository is active again as of 2026-08-24.
+The scope is deliberately narrow — a minimum operational surface (probes, rollout, resource sizing, p95/p99),
+not the full twelve-week Must. Do not start work outside that surface, and do not restart the
+deferred phases (2, 6–9) without the author saying so. For context, read
 [README.md](README.md), then
 [docs/development-plan.md](docs/development-plan.md) and [LEARNING.md](LEARNING.md).
+
+Resumed work does not relax the rule below. It makes it load-bearing: the surface is made almost
+entirely of the author's central learning tasks.
 
 ## The rule that overrides default implementation behaviour
 
@@ -53,10 +58,13 @@ If unsure whether something is central, treat it as central and ask before imple
 
 ## Current state
 
-Paused at phase 0. Documentation, a decision config and scaffold tests exist. There is no deployed
-service, local cluster, cloud resource, MLflow run or benchmark result yet. Unset thresholds in
-`configs/platform.toml` are intentional and must be decided before the first measured run.
+Active, entering M1 of the minimum operational surface. Phase 0 is closed as scaffold:
+documentation, a decision config and scaffold tests exist. There is no deployed service, local
+cluster, cloud resource, MLflow run or benchmark result yet, and `configs/platform.toml` still
+declares `status = "scaffold"` because executable state has not moved. Unset thresholds there are
+intentional and must be decided by the author before the first measured run.
 
-If the project resumes, the first target is a minimum operational surface — probes,
-rollout, resource sizing and a p95/p99 load story — not the whole Must path. Scope for that
-revival is decided by the author, not assumed by an agent.
+The current target is the minimum operational surface only — M1 workload slice, M2 immutable
+image and local baseline, M3 `kind` probes/resources/rollout, M4 RED metrics for a served
+p95/p99. MLflow, canary automation, Terraform, the second workload and the final reproduction
+report are explicitly deferred. Widening that scope is the author's decision, not an agent's.
