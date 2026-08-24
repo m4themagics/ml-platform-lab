@@ -58,11 +58,14 @@ If unsure whether something is central, treat it as central and ask before imple
 
 ## Current state
 
-Active, entering M1 of the minimum operational surface. Phase 0 is closed as scaffold:
-documentation, a decision config and scaffold tests exist. There is no deployed service, local
-cluster, cloud resource, MLflow run or benchmark result yet, and `configs/platform.toml` still
-declares `status = "scaffold"` because executable state has not moved. Unset thresholds there are
-intentional and must be decided by the author before the first measured run.
+M1 is built. `services/fraud_scoring` has a data and model contract, a deterministic training
+path and a release record; `mlplatform` holds the workload-agnostic fingerprint and release
+identity. `configs/platform.toml` declares `status = "m1_workload"`.
+
+There is still no HTTP service, container, local cluster, cloud resource, MLflow run or benchmark
+result. Remaining `UNSET` thresholds are intentional and must be decided by the author before the
+first measured run — in particular the decision threshold, which is currently a placeholder in
+`contract.py` and has to be read off the precision/recall curve.
 
 The current target is the minimum operational surface only — M1 workload slice, M2 immutable
 image and local baseline, M3 `kind` probes/resources/rollout, M4 RED metrics for a served

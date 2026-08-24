@@ -55,20 +55,32 @@ bounded load-test objective and exactly how long that observation lasted.
 
 ## Status
 
-**Active. Phase 0 is closed as scaffold and preregistration; no platform workload is deployed
-yet.** There is no Kubernetes cluster, cloud infrastructure, MLflow result, latency number or
-reliability result in this repository today. The current files define scope, evidence and the
-order of work; scaffold tests make unset decisions visible. `configs/platform.toml` still reads
-`status = "scaffold"` on purpose — reviving the plan does not change executable state.
+**Active at M1: the first workload trains reproducibly. Nothing is served or deployed yet.**
+There is no HTTP service, container, Kubernetes cluster, cloud infrastructure, MLflow result,
+latency number or reliability result in this repository today.
 
-Work now runs on the shortest path to a minimum operational surface (M1–M4 in the
+What does run, from a clean checkout:
+
+| | |
+|---|---|
+| Workload | [`fraud_scoring`](services/fraud_scoring/README.md) — 284,807 card transactions, 492 fraudulent |
+| Dataset identity | `content_hash` `0734105a…`, `schema_hash` `95534149…`, stable across download and cache |
+| Training | deterministic — two runs produce a byte-identical artifact (`sha256 109c3ca7…`) |
+| Baseline quality | average precision **0.801** on a time-ordered holdout (75 positives in 56,962 rows) |
+| Release identity | commit + dataset fingerprint + artifact checksum, recorded per build |
+| Tests | 52, offline, no download required |
+
+The baseline is a training result, not an operational one. It says nothing yet about latency,
+availability or recovery — those start at M2.
+
+Work runs on the shortest path to a minimum operational surface (M1–M4 in the
 [development plan](docs/development-plan.md#возврат-minimum-operational-surface)); phases 2 and
 6–9 are deferred until that surface holds.
 
 | Phase | Deliverable | State |
 |---:|---|---|
 | 0 | Architecture, learning contract, cost and reliability gates | scaffolded |
-| 1 | Small workload, data/model contract, deterministic evaluation | not started — trimmed into M1 |
+| 1 | Small workload, data/model contract, deterministic evaluation | **M1 done** — contract, deterministic training, release record |
 | 2 | MLflow tracking, registry and lineage | not started — deferred past the surface |
 | 3 | Immutable inference image and local service benchmark | not started — trimmed into M2 |
 | 4 | Local Kubernetes deployment: probes, resources, HPA | not started — **M3, the core of the surface** |
@@ -127,14 +139,19 @@ docs/                architecture, plan, protocol, ADRs and learning tracks
 Directories are intentionally populated only when their phase begins. Planned components are
 not presented as implemented ones.
 
-## Reproduce the current scaffold
+## Reproduce
 
 ```bash
-make install
-make check
+make install   # sync the pinned environment
+make check     # ruff + 52 tests, fully offline
+make data      # download the source dataset once, canonicalise, write the fingerprint
+make train     # deterministic fit; writes artifact, metrics and release record
 ```
 
-Later phases add separate commands for local bootstrap, training, deployment, drills and cloud
+`make data` fetches roughly 150 MB on first run and caches it under `data/raw/`; nothing else
+touches the network. Training takes about five seconds on a laptop CPU.
+
+Later phases add separate commands for local bootstrap, serving, deployment, drills and cloud
 destruction. A command enters this section only after it works from a clean checkout.
 
 ## Documents
