@@ -6,6 +6,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs" / "platform.toml"
 
+#: The operational surface advances through these and no others. A status outside this set means
+#: the config claims a stage the plan does not define.
+DECLARED_STATUSES = {
+    "scaffold",
+    "m1_workload",
+    "m2_serving",
+    "m3_kubernetes",
+    "m4_observability",
+}
+
 REQUIRED_SECTIONS = {
     "project",
     "identity",
@@ -27,9 +37,12 @@ def test_config_declares_every_platform_decision_layer() -> None:
     assert REQUIRED_SECTIONS <= set(load_config())
 
 
-def test_scaffold_does_not_claim_deployed_infrastructure() -> None:
+def test_status_never_claims_an_undefined_stage() -> None:
+    assert load_config()["project"]["status"] in DECLARED_STATUSES
+
+
+def test_config_does_not_claim_deployed_infrastructure() -> None:
     config = load_config()
-    assert config["project"]["status"] == "scaffold"
     assert config["environments"]["local"]["enabled"] is False
     assert config["environments"]["cloud"]["enabled"] is False
     assert config["environments"]["cloud"]["apply_enabled"] is False
@@ -49,6 +62,12 @@ def test_measurement_thresholds_remain_visibly_unset() -> None:
     assert config["slo"]["load_profile"] == "UNSET"
     assert config["recovery"]["drill_repetitions"] == "UNSET"
     assert config["cost"]["budget_limit"] == "UNSET"
+
+
+def test_declared_workload_matches_the_implemented_one() -> None:
+    from services.fraud_scoring.contract import WORKLOAD_NAME
+
+    assert load_config()["project"]["primary_workload"] == WORKLOAD_NAME
 
 
 def test_kafka_stays_closed_until_failure_semantics_exist() -> None:

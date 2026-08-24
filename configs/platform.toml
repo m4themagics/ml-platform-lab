@@ -1,7 +1,7 @@
 [project]
-status = "scaffold"
-primary_workload = "UNSET"
-second_workload = "UNSET"
+status = "m1_workload"
+primary_workload = "fraud_scoring"
+second_workload = "text_moderation"
 
 [identity]
 data_fingerprint_required = true
