@@ -4,13 +4,20 @@ version = "0.1.0"
 description = "A measurable model release and recovery path on Kubernetes and AWS."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
-dependencies = []
+dependencies = [
+    "numpy>=2.1",
+    "pandas>=2.2",
+    "scikit-learn>=1.5",
+]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=8.2",
     "ruff>=0.9",
 ]
+
+[tool.uv]
+package = false
 
 [tool.ruff]
 line-length = 100
@@ -19,3 +26,4 @@ target-version = "py312"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+pythonpath = ["."]
