@@ -1,7 +1,7 @@
 # Working context for agents
 
-Read this before touching anything. This repository is paused. Do not advance a phase unless the author explicitly
-reopens it. For preserved context, read
+Read this before touching anything. This repository is paused. Until the author resumes it, do not advance a phase. For preserved
+context, read
 [README.md](README.md), then
 [docs/development-plan.md](docs/development-plan.md) and [LEARNING.md](LEARNING.md).
 
@@ -56,3 +56,7 @@ If unsure whether something is central, treat it as central and ask before imple
 Paused at phase 0. Documentation, a decision config and scaffold tests exist. There is no deployed
 service, local cluster, cloud resource, MLflow run or benchmark result yet. Unset thresholds in
 `configs/platform.toml` are intentional and must be decided before the first measured run.
+
+If the project resumes, the first target is a minimum operational surface — probes,
+rollout, resource sizing and a p95/p99 load story — not the whole Must path. Scope for that
+revival is decided by the author, not assumed by an agent.

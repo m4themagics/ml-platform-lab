@@ -245,3 +245,7 @@ under load, recovery without double-counting и alert/runbook. В AWS реали
 - security theatre из списка сканеров без threat model и blocking gate;
 - второй dashboard, пока первый PromQL не проверен руками.
 
+## При возврате
+
+При возврате первым закрывается minimum operational surface — probes, rollout, resource sizing
+и p95/p99, — а не весь двенадцатинедельный Must ниже.

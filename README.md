@@ -1,6 +1,9 @@
 # ML Platform Lab
 
-> **Portfolio status: paused as of 2026-08-24.** Phase 0 is preserved as a scoped design.
+> **Portfolio status: paused as of 2026-08-24.** Phase 0 is
+> preserved as a scoped design. On revival the first
+> deliverable is a minimum operational surface — probes, rollout, resource sizing and p95/p99
+> evidence by the shortest path through the phases below — not the full twelve-week Must.
 
 [![python](https://img.shields.io/badge/python-3.12-blue)](pyproject.toml)
 [![kubernetes](https://img.shields.io/badge/Kubernetes-planned-326CE5?logo=kubernetes&logoColor=white)](docs/development-plan.md)
