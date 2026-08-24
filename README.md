@@ -115,7 +115,7 @@ queries, rollout events and immutable release identifiers are retained for every
 
 ```text
 services/           tiny training and inference workloads
-platform/           shared model contract, release gates and deployment tooling
+mlplatform/         shared release identity, gates and deployment tooling
 infra/              local Kubernetes and Terraform-owned AWS infrastructure
 configs/            explicit platform decisions and preregistered thresholds
 experiments/        release and recovery drills
