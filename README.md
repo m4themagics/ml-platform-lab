@@ -1,6 +1,6 @@
 # ML Platform Lab
 
-> **Portfolio status: active as of 2026-08-24.** The current deliverable is a
+> **Portfolio status: active as of 2026-08-25.** The current deliverable is a
 > **minimum operational surface** — probes, rollout, resource sizing and p95/p99 evidence by the
 > shortest path through the phases below — not the full twelve-week Must. Nothing is deployed
 > yet; the table under [Status](#status) is the executable state, and it changes only when a
@@ -75,7 +75,8 @@ availability or recovery — those start at M2.
 
 Work runs on the shortest path to a minimum operational surface (M1–M4 in the
 [development plan](docs/development-plan.md#возврат-minimum-operational-surface)); phases 2 and
-6–9 are deferred until that surface holds.
+6–9 are deferred until that surface holds. Two profile steps follow it — M5 (Redis in the hot
+path, 7 h) and M6 (Kafka audit path, 16 h) — ahead of phases 2, 6 and 7.
 
 | Phase | Deliverable | State |
 |---:|---|---|
@@ -90,9 +91,12 @@ Work runs on the shortest path to a minimum operational surface (M1–M4 in the
 | 8 | Second workload through the same golden path | not started — deferred past the surface |
 | 9 | Clean-checkout reproduction and failure report | not started — deferred past the surface |
 
-The twelve-week Must scope ends at phase 9. Kafka is a post-Must extension and opens only
-with an actual asynchronous audit path, idempotent consumption, retries and a consumer-lag
-drill. A producer and consumer with no failure contract do not count.
+The twelve-week Must scope ends at phase 9. Kafka is step M6 and opens only with an actual
+asynchronous audit path, idempotent consumption, retries and a consumer-lag drill. A producer
+and consumer with no failure contract do not count. The same bar applies to Redis in M5: it is
+a response cache with a stated failure contract and an unavailability drill, not a feature
+store, and online/offline consistency is neither proven nor claimed. Airflow stays out — one
+linear training job does not justify an orchestrator.
 
 ## Results
 
