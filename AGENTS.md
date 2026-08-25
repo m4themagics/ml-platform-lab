@@ -70,4 +70,5 @@ first measured run — in particular the decision threshold, which is currently 
 The current target is the minimum operational surface only — M1 workload slice, M2 immutable
 image and local baseline, M3 `kind` probes/resources/rollout, M4 RED metrics for a served
 p95/p99. MLflow, canary automation, Terraform, the second workload and the final reproduction
-report are explicitly deferred. Widening that scope is the author's decision, not an agent's.
+report are explicitly deferred. Redis/M5 and Kafka/M6 are also deferred ideas, not
+the next active milestones. Widening that scope is the author's decision, not an agent's.

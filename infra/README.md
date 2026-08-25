@@ -1,6 +1,7 @@
 # Infrastructure
 
-Empty by design in phase 0.
+Empty by design at the M1 checkpoint. Infrastructure work starts only with author-owned M3
+`kind` decisions; cloud/Terraform remains outside the active M1–M4 scope.
 
 Implementation order:
 
