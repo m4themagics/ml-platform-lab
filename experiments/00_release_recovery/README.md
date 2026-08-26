@@ -1,6 +1,7 @@
 # Experiment 00 — can the release path recover before its bounded objective is exhausted?
 
-Status: **draft preregistration; blocked until the minimum operational surface closes.** The
+Status: **paused preregistration.** The drill remains blocked until the
+project is explicitly resumed and the minimum operational surface closes. The
 drill needs M1–M4 from the [development plan](../../docs/development-plan.md#возврат-minimum-operational-surface):
 a workload, an immutable image, a `kind` deployment with working probes and rollout, and served
 p95/p99. Threshold values remain `UNSET` in `configs/platform.toml` and must be fixed before the

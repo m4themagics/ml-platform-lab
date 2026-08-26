@@ -1,7 +1,7 @@
 # ML Platform Lab
 
-> **Portfolio status: active as of 2026-08-25.** M1 is done.
-> The only active scope is M1–M4, the shortest path to a minimum operational surface.
+> **Portfolio status: PAUSED after M1, as of 2026-08-26.** M1 remains executable
+> evidence; M2–M4 are retained backlog.
 
 [![python](https://img.shields.io/badge/python-3.12-blue)](pyproject.toml)
 [![kubernetes](https://img.shields.io/badge/Kubernetes-M3%20planned-326CE5?logo=kubernetes&logoColor=white)](docs/development-plan.md)
@@ -10,9 +10,9 @@ A deliberately small model workload used to learn and prove release identity, im
 packaging, Kubernetes operational semantics and service-side measurements. Status follows
 executable evidence, not diagrams or tool names.
 
-## Active question
+## Retained question
 
-Can one small model move from a reproducible training result to an immutable local service
+If the project resumes, can one small model move from a reproducible training result to an immutable local service
 whose probes, rollout, resources, autoscaling and RED behaviour are measured and explained?
 
 The answer is bounded to four milestones:
@@ -20,9 +20,9 @@ The answer is bounded to four milestones:
 | Milestone | Hours | Required result | State |
 |---|---:|---|---|
 | M1 | 6 | workload, data/model contract, deterministic training and release identity | **done** |
-| M2 | 8 | immutable image, golden and malformed requests, graceful shutdown, local load baseline | not started |
-| M3 | 14 | `kind` deployment, startup/readiness/liveness, requests/limits, rollout, PDB and HPA | not started |
-| M4 | 6 | RED, in-flight and saturation metrics plus p95/p99 under a declared load profile | not started |
+| M2 | 8 | immutable image, golden and malformed requests, graceful shutdown, local load baseline | paused · not started |
+| M3 | 14 | `kind` deployment, startup/readiness/liveness, requests/limits, rollout, PDB and HPA | paused · not started |
+| M4 | 6 | RED, in-flight and saturation metrics plus p95/p99 under a declared load profile | paused · not started |
 
 M1–M4 total 34 hours. With M1 closed, **28 hours remain**.
 

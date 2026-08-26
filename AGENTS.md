@@ -1,14 +1,14 @@
 # Working context for agents
 
-Read this before touching anything. This repository is active again as of 2026-08-24.
-The scope is deliberately narrow — a minimum operational surface (probes, rollout, resource sizing, p95/p99),
-not the full twelve-week Must. Do not start work outside that surface, and do not restart the
-deferred phases (2, 6–9) without the author saying so. For context, read
+Read this before touching anything. This repository is **paused after M1 as of 2026-08-26**.
+M1 remains evidence; M2–M4 are retained backlog. Do not implement
+them unless the author explicitly resumes the project. Do not restart the deferred phases (2, 6–9)
+without a separate author decision. For context, read
 [README.md](README.md), then
 [docs/development-plan.md](docs/development-plan.md) and [LEARNING.md](LEARNING.md).
 
-Resumed work does not relax the rule below. It makes it load-bearing: the surface is made almost
-entirely of the author's central learning tasks.
+The pause does not relax the rule below. If work resumes, the surface remains almost entirely
+the author's central learning task.
 
 ## The rule that overrides default implementation behaviour
 
@@ -67,8 +67,9 @@ result. Remaining `UNSET` thresholds are intentional and must be decided by the 
 first measured run — in particular the decision threshold, which is currently a placeholder in
 `contract.py` and has to be read off the precision/recall curve.
 
-The current target is the minimum operational surface only — M1 workload slice, M2 immutable
+The retained scope is the minimum operational surface only — M1 workload slice, M2 immutable
 image and local baseline, M3 `kind` probes/resources/rollout, M4 RED metrics for a served
-p95/p99. MLflow, canary automation, Terraform, the second workload and the final reproduction
-report are explicitly deferred. Redis/M5 and Kafka/M6 are also deferred ideas, not
-the next active milestones. Widening that scope is the author's decision, not an agent's.
+p95/p99. M2–M4 are not active milestones while the pause holds. MLflow, canary automation,
+Terraform, the second workload and the final reproduction report remain explicitly deferred.
+Redis/M5 and Kafka/M6 are also deferred ideas. Widening or resuming scope is the author's
+decision, not an agent's.
